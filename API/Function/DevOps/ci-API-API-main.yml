@@ -1,0 +1,15 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - '/API/*'
+
+variables:
+  vmImageName: 'windows-latest'
+  workingDirectory: '$(System.DefaultWorkingDirectory)/API/Function'
+  packageName: 'API'
+
+steps:
+  - template: ../../../DevOps/ci-dotNet8-AzureFunction-template.yml
