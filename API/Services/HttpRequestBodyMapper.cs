@@ -1,8 +1,8 @@
 using FluentValidation;
 using Newtonsoft.Json;
-using API.Services.Interfaces;
+using Fulfill3D.API.API.Services.Interfaces;
 
-namespace API.Services
+namespace Fulfill3D.API.API.Services
 {
     public class HttpRequestBodyMapper<T>(IValidator<T> validator) : IHttpRequestBodyMapper<T>
     {

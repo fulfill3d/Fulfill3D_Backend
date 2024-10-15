@@ -30,7 +30,7 @@
         <Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Data\API.Data.csproj"/>
-        <ProjectReference Include="..\Services\API.Services.csproj"/>
+        <ProjectReference Include="..\Data\Fulfill3D.API.API.Data.csproj" />
+        <ProjectReference Include="..\Services\Fulfill3D.API.API.Services.csproj" />
     </ItemGroup>
 </Project>

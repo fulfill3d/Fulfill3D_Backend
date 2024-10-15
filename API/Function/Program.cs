@@ -1,4 +1,4 @@
-using API;
+using Fulfill3D.API.API;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -34,6 +34,12 @@ var host = new HostBuilder()
         }, sendGridOptions =>
         {
             sendGridOptions.ApiKey = configuration["SendGridApiKey"] ?? string.Empty;
+        }, cosmosOptions =>
+        {
+            cosmosOptions.EndpointUri = configuration["Fulfill3dCosmosEndpointUri"] ?? string.Empty;
+            cosmosOptions.PrimaryKey = configuration["Fulfill3dCosmosPrimaryKey"] ?? string.Empty;
+            cosmosOptions.DatabaseId = configuration["Fulfill3dCosmosDatabaseId"] ?? string.Empty;
+            cosmosOptions.ContainerId = configuration["Fulfill3dCosmosContainerId"] ?? string.Empty;
         });
     })
     .Build();

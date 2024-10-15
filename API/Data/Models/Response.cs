@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace API.Data.Models
+namespace Fulfill3D.API.API.Data.Models
 {
     public class Response
     {
