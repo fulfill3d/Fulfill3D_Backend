@@ -15,7 +15,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Data\API.Data.csproj" />
+      <ProjectReference Include="..\..\Integrations\Fulfill3D.Integrations.CosmosDbClient\Fulfill3D.Integrations.CosmosDbClient.csproj" />
+      <ProjectReference Include="..\Data\Fulfill3D.API.API.Data.csproj" />
     </ItemGroup>
 
 </Project>

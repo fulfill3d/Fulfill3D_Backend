@@ -1,4 +1,4 @@
-namespace API.Services.Options
+namespace Fulfill3D.API.API.Services.Options
 {
     public class EmailOptions(string email, string subject, string message)
     {

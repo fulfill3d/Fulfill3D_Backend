@@ -1,10 +1,10 @@
-using API.Data.Models;
-using API.Services.Interfaces;
-using API.Services.Options;
+using Fulfill3D.API.API.Data.Models;
+using Fulfill3D.API.API.Services.Interfaces;
+using Fulfill3D.API.API.Services.Options;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace API.Services
+namespace Fulfill3D.API.API.Services
 {
     public class RecaptchaService(IHttpClientFactory httpClientFactory, IOptions<RecaptchaOptions> opt): IRecaptchaService
     {

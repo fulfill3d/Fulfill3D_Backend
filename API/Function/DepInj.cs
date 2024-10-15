@@ -1,26 +1,29 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using API.Data.Models;
-using API.Services;
-using API.Services.Interfaces;
-using API.Services.Options;
+using Fulfill3D.API.API.Data.Models;
+using Fulfill3D.API.API.Services;
+using Fulfill3D.API.API.Services.Interfaces;
+using Fulfill3D.API.API.Services.Options;
+using Fulfill3D.Integrations.CosmosDbClient;
+using Fulfill3D.Integrations.CosmosDbClient.Options;
 using SendGrid;
 using SendGrid.Extensions.DependencyInjection;
 
-namespace API
+namespace Fulfill3D.API.API
 {
     public static class DepInj
     {
         public static void RegisterServices(
             this IServiceCollection services,
             Action<RecaptchaOptions> configureRecaptchaOptions,
-            Action<ApiOptions> configureApiOptions,
-            Action<SendGridClientOptions> configureSendGrid)
+            Action<EmailMetaOptions> configureApiOptions,
+            Action<SendGridClientOptions> configureSendGrid,
+            Action<CosmosDbClientOptions> configureCosmosDbClientOptions)
         {
             #region Miscellaneous
 
             services.ConfigureServiceOptions<RecaptchaOptions>((_, opt) => configureRecaptchaOptions(opt));
-            services.ConfigureServiceOptions<ApiOptions>((_, opt) => configureApiOptions(opt));
+            services.ConfigureServiceOptions<EmailMetaOptions>((_, opt) => configureApiOptions(opt));
             services.AddHttpRequestBodyMapper();
             services.AddFluentValidator<FormRequest>();
             
@@ -39,6 +42,7 @@ namespace API
 
             services.AddTransient<IApiService, ApiService>();
             services.AddTransient<IRecaptchaService, RecaptchaService>();
+            services.RegisterCosmosDbClient(configureCosmosDbClientOptions);
 
             #endregion
         }

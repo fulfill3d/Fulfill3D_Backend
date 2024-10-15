@@ -1,6 +1,6 @@
-namespace API.Services.Options
+namespace Fulfill3D.API.API.Services.Options
 {
-    public class ApiOptions
+    public class EmailMetaOptions
     {
         public string ReceiverName { get; set; }
         public string EmailTo { get; set; }

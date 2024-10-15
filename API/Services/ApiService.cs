@@ -1,16 +1,17 @@
 using System.Net;
-using API.Data.Models;
+using Fulfill3D.API.API.Data.Models;
 using Microsoft.Extensions.Options;
-using API.Services.Interfaces;
-using API.Services.Options;
+using Fulfill3D.API.API.Services.Interfaces;
+using Fulfill3D.API.API.Services.Options;
+using Fulfill3D.Integrations.CosmosDbClient.Interfaces;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace API.Services
+namespace Fulfill3D.API.API.Services
 {
-    public class ApiService(ISendGridClient sendGridClient, IOptions<ApiOptions> opt) : IApiService
+    public class ApiService(ICosmosDbClient cosmosDbClient, ISendGridClient sendGridClient, IOptions<EmailMetaOptions> opt) : IApiService
     {
-        private readonly ApiOptions _options = opt.Value;
+        private readonly EmailMetaOptions _options = opt.Value;
 
         public async Task<bool> SendEmail(FormRequest formRequest)
         {
@@ -34,6 +35,38 @@ namespace API.Services
             var response = await sendGridClient.SendEmailAsync(msg);
             
             return response.StatusCode == HttpStatusCode.Accepted;
+        }
+        
+        public async Task<IEnumerable<Post>> GetPublishedBlogPostsMetadata()
+        {
+            string query = @"SELECT c.id, c.partitionKey, c.title, c.slug, c.author, c.tags, c.excerpt, c.image, c.status FROM c WHERE c.status = 'published'";
+            return await cosmosDbClient.QueryItemsAsync<Post>(query);
+        }
+        
+        public async Task<Post> GetBlogPost(string id, string partitionKey)
+        {
+            return await cosmosDbClient.GetItemAsync<Post>(id, partitionKey);
+        }
+        
+        public async Task<IEnumerable<Project>> GetProjectsMetadata()
+        {
+            string query = @"SELECT * FROM c WHERE c.status = 'active'";
+            return await cosmosDbClient.QueryItemsAsync<Project>(query);
+        }
+        
+        public async Task<Project> GetProject(string id, string partitionKey)
+        {
+            return await cosmosDbClient.GetItemAsync<Project>(id, partitionKey);
+        }
+
+        public async Task<Person> GetPerson(string id, string partitionKey)
+        {
+            return await cosmosDbClient.GetItemAsync<Person>(id, partitionKey);
+        }
+
+        public async Task<Company> GetCompany(string id, string partitionKey)
+        {
+            return await cosmosDbClient.GetItemAsync<Company>(id, partitionKey);
         }
     }
 }
